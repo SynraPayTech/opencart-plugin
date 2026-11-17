@@ -3,7 +3,6 @@
 $_['text_title']              = 'Credit / Debit card';
 $_['text_description']        = 'Visa, Mastercard and American Express accepted. Secured by SynraPay.';
 $_['text_test_mode']          = 'Test mode';
-$_['text_secure']             = 'Your card details are entered in SynraPay\'s secure frame and are never seen by this store. Payments processed by SynraPay.';
 $_['text_processing']         = 'Processing your payment…';
 $_['text_confirming']         = 'Confirming your payment…';
 $_['text_not_ready']          = 'The card form is still loading.';

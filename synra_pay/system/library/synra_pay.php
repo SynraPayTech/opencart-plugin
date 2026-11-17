@@ -24,7 +24,7 @@ if (class_exists('SynraPayDirectClient', false)) {
 
 class SynraPayDirectClient
 {
-    const VERSION = '1.0.3';
+    const VERSION = '1.0.4';
 
     const ENVS = [
         // 'sdk' is SynraPay's public script for merchant pages (hosted-session.js). It loads the card
@@ -34,9 +34,13 @@ class SynraPayDirectClient
         'live'    => ['api' => 'https://api.synrapay.com/v1',         'sdk' => 'https://js.synrapay.com/direct/v1/hosted-session.js',         'label' => 'Live',    'token' => 'production'],
     ];
 
-    const PATH_CREATE_ORDER   = '/direct/create-order';
-    const PATH_HOSTED_SESSION = '/direct/hosted-session';
-    const PATH_STATUS         = '/direct/payment/%s/status';
+    // The opencart door of SynraPay's plugin platform (/v1/direct/plugins/opencart/*):
+    // the Direct API's own orders, sessions and status, with this plugin's rules
+    // applied by SynraPay (the bank's 3-D Secure check opens over the checkout
+    // page; saved cards follow the Save cards switch SynraPay holds for this plugin).
+    const PATH_CREATE_ORDER   = '/direct/plugins/opencart/orders';
+    const PATH_HOSTED_SESSION = '/direct/plugins/opencart/sessions';
+    const PATH_STATUS         = '/direct/plugins/opencart/orders/%s/status';
     const PATH_REFUND         = '/refund';
 
     /** @var int last x-timestamp used by this process (ms) */
@@ -139,6 +143,9 @@ class SynraPayDirectClient
             'x-signature-version: 2',
             'x-signature: ' . $sig,
             'User-Agent: SynraPay-OpenCart/' . self::VERSION,
+            // Shown to SynraPay support beside this store's plugin; never used to decide anything.
+            'x-synrapay-plugin-version: ' . self::VERSION,
+            'x-synrapay-platform-version: OpenCart ' . (\defined('VERSION') ? (string) \constant('VERSION') : ''),
         ];
 
         $ch = curl_init($url);

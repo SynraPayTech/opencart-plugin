@@ -7,7 +7,7 @@ server.
 
 | | |
 |---|---|
-| 📦 Extension | `synra_pay` v1.0.3 — folder [`synra_pay/`](./synra_pay), zip `synra_pay.ocmod.zip` |
+| 📦 Extension | `synra_pay` v1.0.4 — folder [`synra_pay/`](./synra_pay), zip `synra_pay.ocmod.zip` |
 | 🛒 OpenCart | 4.0.2.0 or greater (written against 4.0.2.x) |
 | 🐘 PHP | 8.2 or greater |
 | 🔐 Integration | SynraPay Direct API — hosted session, signature v2 |
@@ -161,6 +161,7 @@ dist/                                          ready-to-install zip
 
 ## 📝 Changelog
 
+- **1.0.4** (2026-11-17) The plugin calls its own door on SynraPay (`/v1/direct/plugins/opencart`): the bank's 3-D Secure check opens over the checkout page. The line under the Pay button ("Your card details are entered in SynraPay's secure frame…") is gone.
 - **1.0.3** (2026-11-14) SynraPay made its card-fields script (sdk.js) internal: a store page that loads it directly now gets "Something went wrong" and no card form. The card form is loaded through SynraPay's public hosted-session.js (SynraHostedSession.mount) instead. Environments are Sandbox and Live only (a store saved on Develop runs as Sandbox). The webhook secret is the one "Webhook secret (KEY_SHA512)" from Developers → API Keys; the per-endpoint Signing secret is gone from the portal.
 - **1.0.2** (2026-11-11) One transaction id. The Direct API order id is the Transaction ID the merchant dashboard shows, and every Direct API answer carries `transaction_id` equal to it. The OpenCart transaction id is `transaction_id` (falling back to the Direct order id); `synrapay_transaction_id` is no longer read from the API (the link table column of that name is kept as storage). Webhook settlement takes the Transaction ID from the webhook body's `transactionId` and no longer makes a status read for it. The paid history line lists Merchant order ID, Transaction ID and the auth code when present; the "SynraPay order ID" line is gone because it would repeat the Transaction ID.
 - **1.0.1** — The OpenCart transaction id now matches the SynraPay merchant dashboard's **Transaction ID** (`synrapay_transaction_id` from the status read, falling back to the Direct order id). Webhook settlement makes one best-effort status read for it and never blocks on it. The paid history line lists Merchant order ID, Transaction ID, SynraPay order ID and the auth code when present. No gateway reference is stored or shown any more (it is internal to SynraPay; the 1.0.0 `gateway_ref` column is kept but no longer written). Link table gains `synrapay_transaction_id` + `auth_code` (added automatically when missing).
