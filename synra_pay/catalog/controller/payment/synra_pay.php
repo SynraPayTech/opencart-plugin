@@ -44,6 +44,8 @@ class SynraPay extends \Opencart\System\Engine\Controller
             'config_json' => json_encode([
                 'sessionUrl' => $this->url->link(self::ROUTE . '.session', 'language=' . $this->config->get('config_language'), true),
                 'confirmUrl' => $this->url->link(self::ROUTE . '.confirm', 'language=' . $this->config->get('config_language'), true),
+                // Where a shopper who cancels the bank check is sent: OpenCart's own failed-payment page.
+                'cancelUrl'  => $this->url->link('checkout/failure', 'language=' . $this->config->get('config_language'), true),
                 'sdkUrl'     => \SynraPayDirectClient::ENVS[$env]['sdk'],
                 'i18n'       => [
                     'processing' => $this->language->get('text_processing'),

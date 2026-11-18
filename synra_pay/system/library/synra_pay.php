@@ -24,7 +24,7 @@ if (class_exists('SynraPayDirectClient', false)) {
 
 class SynraPayDirectClient
 {
-    const VERSION = '1.0.4';
+    const VERSION = '1.0.5';
 
     const ENVS = [
         // 'sdk' is SynraPay's public script for merchant pages (hosted-session.js). It loads the card
