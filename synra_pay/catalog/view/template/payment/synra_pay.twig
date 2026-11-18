@@ -142,7 +142,8 @@
       // Nothing was sent (a card detail to fix, or the fields were not ready): the fields say what, and keep what was typed.
       if (r.code) return { paid: false, failed: false, inline: true, message: r.message || i18n.incomplete };
       // Declined or cancelled: one quick read settles a closed Direct order; an order that stays open is not waited on.
-      return confirm(2).then(function (c) { return c.paid ? c : { paid: false, failed: true, message: r.message || c.message, redirect: c.redirect }; });
+      // A cancelled bank check leaves this page for the store's failed-payment page; a declined card stays here for another try.
+      return confirm(2).then(function (c) { return c.paid ? c : { paid: false, failed: true, message: r.message || c.message, redirect: c.redirect || (r.status === 'cancel' ? cfg.cancelUrl : '') }; });
     }).then(function (out) {
       if (out.paid) { setStatus(i18n.confirming, 'muted'); w.location.assign(out.redirect); return; }
       if (out.redirect) { w.location.assign(out.redirect); return; }
