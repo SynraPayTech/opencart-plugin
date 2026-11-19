@@ -7,7 +7,7 @@ server.
 
 | | |
 |---|---|
-| 📦 Extension | `synra_pay` v1.0.5 — folder [`synra_pay/`](./synra_pay), zip `synra_pay.ocmod.zip` |
+| 📦 Extension | `synra_pay` v1.0.6 — folder [`synra_pay/`](./synra_pay), zip `synra_pay.ocmod.zip` |
 | 🛒 OpenCart | 4.0.2.0 or greater (written against 4.0.2.x) |
 | 🐘 PHP | 8.2 or greater |
 | 🔐 Integration | SynraPay Direct API — hosted session, signature v2 |
@@ -161,6 +161,7 @@ dist/                                          ready-to-install zip
 
 ## 📝 Changelog
 
+- **1.0.6** (2026-11-19) The card form's script is loaded from SynraPay's one public address (`https://js.synrapay.com/hosted-session.js`, Sandbox: `https://sandbox.js.synrapay.com/hosted-session.js`). An order is marked paid only when SynraPay reports it CAPTURED; AUTHORIZED is not paid. A payment SynraPay still marks `awaiting_confirmation` is not final: the order waits for the webhook.
 - **1.0.5** (2026-11-18) A shopper who cancels the bank check is sent to OpenCart's failed-payment page; the cart is unchanged. A declined card stays on the checkout for another try.
 - **1.0.4** (2026-11-17) The plugin calls its own door on SynraPay (`/v1/direct/plugins/opencart`): the bank's 3-D Secure check opens over the checkout page. The line under the Pay button ("Your card details are entered in SynraPay's secure frame…") is gone.
 - **1.0.3** (2026-11-14) SynraPay made its card-fields script (sdk.js) internal: a store page that loads it directly now gets "Something went wrong" and no card form. The card form is loaded through SynraPay's public hosted-session.js (SynraHostedSession.mount) instead. Environments are Sandbox and Live only (a store saved on Develop runs as Sandbox). The webhook secret is the one "Webhook secret (KEY_SHA512)" from Developers → API Keys; the per-endpoint Signing secret is gone from the portal.

@@ -40,7 +40,7 @@ $_['help_api_key']           = 'Developers → API Keys → section 1 "Request S
 $_['help_fallback_phone']    = 'SynraPay requires a phone number on every order. When the customer\'s telephone is missing or invalid this number is sent instead so the card form still loads (digits with country code, e.g. 971500000000). Leave empty to require a valid customer phone.';
 $_['help_webhook_key']       = 'Developers → API Keys → section 2 "Webhook Verification" → Webhook secret (KEY_SHA512). It is the one secret that signs every webhook SynraPay sends you: each carries x-synrapay-signature = HMAC-SHA512 of "timestamp.body" with it, and a webhook that does not verify is refused with 401. If you regenerate the webhook keys in the portal, paste the new value here.';
 $_['help_x_api_key']         = 'Developers → API Keys → section 2 "Webhook Verification". Optional: leave both fields empty to verify webhooks by signature only.';
-$_['help_order_status']      = 'Set when SynraPay reports the payment CAPTURED or AUTHORIZED (stock is subtracted at that moment).';
+$_['help_order_status']      = 'Set when SynraPay reports the payment CAPTURED (stock is subtracted at that moment).';
 $_['help_pending_status']    = 'Set when the card frame reported the payment approved but SynraPay is not final yet; the webhook or the hourly re-check cron then moves the order to Paid or Failed.';
 $_['help_failed_status']     = 'Set only when an awaiting-confirmation order turns out declined. An order the customer never paid stays as a missing order (status 0), like any abandoned OpenCart checkout.';
 
