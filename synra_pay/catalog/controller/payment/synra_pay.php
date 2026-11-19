@@ -9,7 +9,7 @@ namespace Opencart\Catalog\Controller\Extension\SynraPay\Payment;
  *   session()  Direct API create-order for the session's order (+ reuse) and
  *              hosted-session with origin = this store → clientToken
  *   confirm()  GET /direct/payment/{order_id}/status decides:
- *                CAPTURED/AUTHORIZED (no awaiting_mastercard) → paid status → checkout/success
+ *                CAPTURED (no awaiting_confirmation) → paid status → checkout/success
  *                FAILED/… → the OpenCart order stays unconfirmed, the page opens a new Direct order
  *                frame said ok, SynraPay not final → awaiting-confirmation status → checkout/success,
  *                                                     settled by webhook() or recheck()
@@ -313,7 +313,7 @@ class SynraPay extends \Opencart\System\Engine\Controller
             return;
         }
         $status   = strtolower((string) ($body['status'] ?? ''));
-        $awaiting = isset($body['confirmation']) && $body['confirmation'] === 'awaiting_mastercard';
+        $awaiting = isset($body['confirmation']) && $body['confirmation'] === 'awaiting_confirmation';
         if (!$awaiting && in_array($status, ['success', 'captured', 'authorized', 'paid'], true)) {
             // The webhook's transactionId IS the dashboard Transaction ID (one transaction id, equal to
             // the Direct order_id): no status read is needed for it. The signed body decides.
